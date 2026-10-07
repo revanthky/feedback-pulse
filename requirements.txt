@@ -1,0 +1,4 @@
+streamlit>=1.45
+psycopg2-binary>=2.9
+minio>=7.2
+requests>=2.31

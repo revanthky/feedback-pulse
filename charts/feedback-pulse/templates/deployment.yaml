@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "feedback-pulse.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{- include "feedback-pulse.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels: {{- include "feedback-pulse.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels: {{- include "feedback-pulse.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: app
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+          env:
+            # DKubeX serves base-path apps under /<app-name>; the app must honour it.
+            - name: DKUBEX_BASE_PATH
+              value: "/{{ include "feedback-pulse.name" . }}"
+            {{- if .Values.postgres }}
+            - name: DATABASE_URL
+              value: {{ .Values.postgres.db_url | quote }}
+            {{- end }}
+            {{- if .Values.minio }}
+            - name: MINIO_ENDPOINT
+              value: {{ .Values.minio.endpoint | quote }}
+            - name: MINIO_ACCESS_KEY
+              value: {{ .Values.minio.access_key | quote }}
+            - name: MINIO_SECRET_KEY
+              value: {{ .Values.minio.secret_key | quote }}
+            - name: MINIO_BUCKET
+              value: {{ .Values.minio.bucket | quote }}
+            {{- end }}
+            {{- if .Values.llm }}
+            - name: LLM_BASE_URL
+              value: {{ .Values.llm.baseUrl | quote }}
+            - name: LLM_TOKEN
+              value: {{ .Values.llm.token | quote }}
+            - name: LLM_MODEL
+              value: {{ .Values.llm.model | quote }}
+            {{- end }}
+          resources: {{- toYaml .Values.resources | nindent 12 }}

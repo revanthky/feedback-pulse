@@ -1,0 +1,35 @@
+apiVersion: v2
+name: feedback-pulse
+description: LLM-powered customer feedback analysis — sentiment, category and summary, with a dashboard.
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+
+annotations:
+  dkubex: |
+    url: "/feedback-pulse"
+    displayName: Feedback Pulse
+    icon: "https://raw.githubusercontent.com/dkubeio/feedback-pulse/main/icon.svg"
+    docs: "https://dkubeio.github.io/docs-site/components/feedback-pulse/"
+    images:
+      - "https://raw.githubusercontent.com/dkubeio/feedback-pulse/main/assets/screenshot-1.png"
+    video: ""
+    description: "Analyze customer feedback for sentiment and category with an LLM, and track trends on a dashboard."
+    categories:
+      - "AI / ML"
+    roles:
+      - "admin"
+      - "user"
+    resources:
+      cpu:
+        min: "100m"
+        recommended: "250m"
+      memory:
+        min: "256Mi"
+        recommended: "512Mi"
+    dependencies:
+      - postgres
+      - minio
+    routing:
+      type: basepath
+    timeout: "10m"

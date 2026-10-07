@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+.streamlit/
+.dkubex-app.env
+*.log
+.DS_Store

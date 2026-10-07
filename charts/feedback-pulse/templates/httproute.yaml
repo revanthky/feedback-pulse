@@ -1,0 +1,32 @@
+{{/*
+  Base-path routing — every app with a UI keeps this file. Delete it only for a headless
+  app (routing.type: none), which has no route at all.
+*/}}
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ include "feedback-pulse.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{- include "feedback-pulse.labels" . | nindent 4 }}
+spec:
+  parentRefs:
+    - name: traefik-gateway
+      namespace: dkubex
+  {{- if and .Values.hostname (ne .Values.hostname "*") }}
+  hostnames:
+    - {{ .Values.hostname | quote }}
+  {{- end }}
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /{{ include "feedback-pulse.name" . }}
+      filters:
+        - type: ExtensionRef
+          extensionRef:
+            group: traefik.io
+            kind: Middleware
+            name: cookie-auth
+      backendRefs:
+        - name: {{ include "feedback-pulse.fullname" . }}
+          port: {{ .Values.service.port }}
