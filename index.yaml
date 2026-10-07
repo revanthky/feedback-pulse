@@ -1,0 +1,43 @@
+apiVersion: v1
+entries:
+  feedback-pulse:
+  - annotations:
+      dkubex: |
+        url: "/feedback-pulse"
+        displayName: Feedback Pulse
+        icon: "https://raw.githubusercontent.com/revanthky/feedback-pulse/main/icon.svg"
+        docs: "https://dkubeio.github.io/docs-site/components/feedback-pulse/"
+        images:
+          - "https://raw.githubusercontent.com/revanthky/feedback-pulse/main/icon.svg"
+        video: ""
+        description: "Analyze customer feedback for sentiment and category with an LLM, and track trends on a dashboard."
+        categories:
+          - "AI / ML"
+        roles:
+          - "admin"
+          - "user"
+        resources:
+          cpu:
+            min: "100m"
+            recommended: "250m"
+          memory:
+            min: "256Mi"
+            recommended: "512Mi"
+        dependencies:
+          - postgres
+          - minio
+        routing:
+          type: basepath
+        timeout: "10m"
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2026-10-07T23:02:24.348937256Z"
+    description: LLM-powered customer feedback analysis — sentiment, category and
+      summary, with a dashboard.
+    digest: 80593e750502cd97558d0ddb78f594dcb214312507da8bbb4753b461217f2af2
+    name: feedback-pulse
+    type: application
+    urls:
+    - https://raw.githubusercontent.com/revanthky/feedback-pulse/helm-repo/feedback-pulse-0.1.0.tgz
+    version: 0.1.0
+generated: "2026-10-07T23:02:24.348618427Z"
