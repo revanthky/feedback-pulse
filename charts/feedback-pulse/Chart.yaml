@@ -9,10 +9,10 @@ annotations:
   dkubex: |
     url: "/feedback-pulse"
     displayName: Feedback Pulse
-    icon: "https://raw.githubusercontent.com/dkubeio/feedback-pulse/main/icon.svg"
+    icon: "https://raw.githubusercontent.com/revanthky/feedback-pulse/main/icon.svg"
     docs: "https://dkubeio.github.io/docs-site/components/feedback-pulse/"
     images:
-      - "https://raw.githubusercontent.com/dkubeio/feedback-pulse/main/assets/screenshot-1.png"
+      - "https://raw.githubusercontent.com/revanthky/feedback-pulse/main/icon.svg"
     video: ""
     description: "Analyze customer feedback for sentiment and category with an LLM, and track trends on a dashboard."
     categories:
